@@ -1,34 +1,25 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const addBtn = document.getElementById("addSubject");
-  const tbody = document.getElementById("table-content");
+  const subjectForm = document.getElementById("subjectForm");
+  const addSubjectButton = document.getElementById("addSubject");
+  const tableContent = document.querySelector("#subjectForm ~ .row table tbody#table-content");
 
-  if (!addBtn || !tbody) return;
+  if (addSubjectButton) {
+    addSubjectButton.addEventListener("click", () => {
+      const subjectCode = document.getElementById("subjectCode").value;
+      const subjectName = document.getElementById("subjectName").value;
+      const units = document.getElementById("units").value;
 
-  addBtn.addEventListener("click", () => {
-    const codeEl = document.getElementById("subjectCode");
-    const nameEl = document.getElementById("subjectName");
-    const unitsEl = document.getElementById("units");
-
-    const code = (codeEl?.value || "").trim();
-    const name = (nameEl?.value || "").trim();
-    const units = (unitsEl?.value || "").trim();
-
-    if (!code || !name || !units) {
-      alert("Please fill in Subject Code, Subject Name, and Units.");
-      return;
-    }
-
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${code}</td>
-      <td>${name}</td>
-      <td>${units}</td>
-    `;
-    tbody.appendChild(tr);
-
-    if (codeEl) codeEl.value = "";
-    if (nameEl) nameEl.value = "";
-    if (unitsEl) unitsEl.value = "";
-    codeEl?.focus();
-  });
+      if (subjectCode && subjectName && units) {
+        const newRow = `
+          <tr>
+            <td>${subjectCode}</td>
+            <td>${subjectName}</td>
+            <td>${units}</td>
+          </tr>
+        `;
+        tableContent.innerHTML += newRow;
+        subjectForm.reset();
+      }
+    });
+  }
 });
